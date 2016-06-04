@@ -398,7 +398,7 @@ WorkerManager::workerMain(Worker* worker)
                     // so use an atomic op and only change to SLEEPING if the
                     // current value is POLLING.
                     int expected = Worker::POLLING;
-                    if (worker->state.compareExchange(expected,
+                    if (Worker::POLLING == worker->state.compareExchange(expected,
                                                       Worker::SLEEPING)) {
                         if (sys->futexWait(
                                 reinterpret_cast<int*>(&worker->state),
